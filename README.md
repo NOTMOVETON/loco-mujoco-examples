@@ -24,14 +24,14 @@
 Итоговое поведение:
 
 <video width="640" height="480" controls>
-  <source src="/home/dmitriy/study/DISS/loco_mujoco_examples/loco-mujoco-examples/docs/videos/simple_learned.webm" type="video/webm">
+  <source src="/home/dmitriy/study/DISS/loco_mujoco_examples/loco-mujoco-examples/docs/videos/simple_learned.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
 Поведение эксперта:
 
 <video width="640" height="480" controls>
-  <source src="/home/dmitriy/study/DISS/loco_mujoco_examples/loco-mujoco-examples/docs/videos/simple_expert.webm" type="video/webm">
+  <source src="/home/dmitriy/study/DISS/loco_mujoco_examples/loco-mujoco-examples/docs/videos/simple_expert.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
@@ -40,14 +40,14 @@
 Итоговое поведение:
 
 <video width="640" height="480" controls>
-  <source src="/home/dmitriy/study/DISS/loco_mujoco_examples/loco-mujoco-examples/docs/videos/hard_learned.webm" type="video/webm">
+  <source src="/home/dmitriy/study/DISS/loco_mujoco_examples/loco-mujoco-examples/docs/videos/hard_learned.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
 Поведение эксперта:
 
 <video width="640" height="480" controls>
-  <source src="/home/dmitriy/study/DISS/loco_mujoco_examples/loco-mujoco-examples/docs/videos/hard_expert.webm" type="video/webm">
+  <source src="/home/dmitriy/study/DISS/loco_mujoco_examples/loco-mujoco-examples/docs/videos/hard_expert.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
