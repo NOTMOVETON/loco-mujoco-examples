@@ -23,33 +23,28 @@
 
 Итоговое поведение:
 
-<video width="640" height="480" controls>
-  <source src="/home/dmitriy/study/DISS/loco_mujoco_examples/loco-mujoco-examples/docs/videos/simple_learned.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+
+https://github.com/user-attachments/assets/a6e5fd51-05fc-4a48-9748-3133504deec5
 
 Поведение эксперта:
 
-<video width="640" height="480" controls>
-  <source src="/home/dmitriy/study/DISS/loco_mujoco_examples/loco-mujoco-examples/docs/videos/simple_expert.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+
+https://github.com/user-attachments/assets/f7468bbc-4e81-4ea9-bccc-b549f398112c
+
 
 ### Результаты задачи 2
 
 Итоговое поведение:
 
-<video width="640" height="480" controls>
-  <source src="/home/dmitriy/study/DISS/loco_mujoco_examples/loco-mujoco-examples/docs/videos/hard_learned.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+
+https://github.com/user-attachments/assets/9c892037-7097-44ce-b906-5833eb49837a
+
 
 Поведение эксперта:
 
-<video width="640" height="480" controls>
-  <source src="/home/dmitriy/study/DISS/loco_mujoco_examples/loco-mujoco-examples/docs/videos/hard_expert.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+
+https://github.com/user-attachments/assets/708174a8-0224-4373-9c09-1260bb5e6d7a
+
 
 ## Проблемы, с которыми я столкнулся
 
