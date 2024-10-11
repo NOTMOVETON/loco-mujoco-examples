@@ -158,12 +158,12 @@ UnitreeA1.simple:
     disc_only_states: True
     disc_use_next_states: True
     train_disc_n_th_epoch: 6
-    disc_batch_size: 2048
-    learning_rate_critic: 1.0e-4
+    disc_batch_size: 32768
+    learning_rate_critic: 5.0e-5
     learning_rate_disc: 5.0e-5
     policy_entr_coef: 1.0e-3
     max_kl: 5.0e-3
-    n_epochs_cg: 25
+    n_epochs_cg: 20
     use_noisy_targets: False
     last_policy_activation: "identity"
 

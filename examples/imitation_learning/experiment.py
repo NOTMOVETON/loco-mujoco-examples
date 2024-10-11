@@ -14,15 +14,15 @@ from utils import get_agent
 
 
 def experiment(env_id: str = None,
-               n_epochs: int = 500,
-               n_steps_per_epoch: int = 10000,
-               n_steps_per_fit: int = 1024,
-               n_eval_episodes: int = 50,
+               n_epochs: int = 5,
+               n_steps_per_epoch: int = 100,
+               n_steps_per_fit: int = 8196,
+               n_eval_episodes: int = 100,
                n_epochs_save: int = 500,
                gamma: float = 0.99,
                results_dir: str = './logs',
-               use_cuda: bool = False,
-               seed: int = 0):
+               use_cuda: bool = True,
+               seed: int = 83):
 
     np.random.seed(seed)
     torch.random.manual_seed(seed)
@@ -32,19 +32,19 @@ def experiment(env_id: str = None,
     # logging
     sw = SummaryWriter(log_dir=results_dir)     # tensorboard
     logger = Logger(results_dir=results_dir, log_name="logging", seed=seed, append=True)    # numpy
-    agent_saver = BestAgentSaver(save_path=results_dir, n_epochs_save=n_epochs_save)
 
     print(f"Starting training {env_id}...")
+    print(n_epochs)
 
     # create environment, agent and core
     mdp = LocoEnv.make(env_id)
     agent = get_agent(env_id, mdp, use_cuda, sw)
     core = Core(agent, mdp)
-
+    
     for epoch in range(n_epochs):
-
+        print(epoch)
         # train
-        core.learn(n_steps=n_steps_per_epoch, n_steps_per_fit=n_steps_per_fit, quiet=True, render=False)
+        core.learn(n_steps=n_steps_per_epoch, n_steps_per_fit=n_steps_per_fit, quiet=False, render=False)
 
         # evaluate
         dataset = core.evaluate(n_episodes=n_eval_episodes)
@@ -55,9 +55,13 @@ def experiment(env_id: str = None,
         sw.add_scalar("Eval_R-stochastic", R_mean, epoch)
         sw.add_scalar("Eval_J-stochastic", J_mean, epoch)
         sw.add_scalar("Eval_L-stochastic", L, epoch)
-        agent_saver.save(core.agent, R_mean)
 
-    agent_saver.save_curr_best_agent()
+        if epoch%3==0:
+            print('saving agent', epoch)
+            path = os.path.join(results_dir, f"agent_{epoch}_{R_mean}")
+            agent.save(path, full_save=True)
+            print('saving agent successed.')
+
     print("Finished.")
 
 
