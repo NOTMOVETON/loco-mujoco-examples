@@ -1,163 +1,68 @@
-<p align="center">
-  <img width="70%" src="https://github.com/robfiras/loco-mujoco/assets/69359729/bd2a219e-ddfd-4355-8024-d9af921fb92a">
-</p>
+# Имитационное обучение для квадропеда
 
-![continous integration](https://github.com/robfiras/loco-mujoco/actions/workflows/continuous_integration.yml/badge.svg?branch=dev)
-[![Documentation Status](https://readthedocs.org/projects/loco-mujoco/badge/?version=latest)](https://loco-mujoco.readthedocs.io/en/latest/?badge=latest)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![PyPI](https://img.shields.io/pypi/v/loco-mujoco)](https://pypi.org/project/loco-mujoco/)
-[![Join our Discord](https://img.shields.io/badge/Discord-Join%20Us-7289DA?style=flat&logo=discord&logoColor=white)](https://discord.gg/gEqR3xCVdn)
+В процессе реализации дальнейшей работы был изучен бенчмарк     `loco-mujoco`, и библиотеки для обучения с подкреплением `imitation-lib` и `mushroomRL`.
 
+## Описание экспериментов
 
-**LocoMuJoCo** is an **imitation learning benchmark** specifically targeted towards **locomotion**. It encompasses a diverse set of environments, including quadrupeds, bipeds, and musculoskeletal human models, each accompanied by comprehensive datasets, such as real noisy motion capture data, ground truth expert data, and ground truth sub-optimal data,
-enabling evaluation across a spectrum of difficulty levels. 
+### Эксперимент 1: Ходьба квадропеда в одном направлении
+Первая задача заключалась в том, чтобы обучить квадропеда ходить в одном фиксированном направлении. 
 
-**LocoMuJoCo** also allows you to specify your own reward function to use this benchmark for **pure reinforcement learning**! Checkout the example below!
+### Эксперимент 2: Ходьба квадропеда в 8 случайных направлениях
+Вторая задача усложняется тем, что квадропеду требуется ходить в одном из восьми направлений, которые выбираются случайным образом в начале каждого эпизода.
 
-<p align="center">
-  <img src="https://github.com/robfiras/loco-mujoco/assets/69359729/c16dfa4a-4fdb-4701-9a42-54cbf7644301">
-</p>
+## Используемые библиотеки и алгоритм
+Эти эксперименты были проведены при помощи [loco-mujoco](#https://github.com/robfiras/loco-mujoco), [mushroom-RL](#https://github.com/MushroomRL/mushroom-rl) и [imitation-lib](#https://github.com/robfiras/ls-iq).
 
-### Key Advantages 
-✅ Easy to use with [Gymnasium](https://github.com/Farama-Foundation/Gymnasium) or [Mushroom-RL](https://github.com/MushroomRL/mushroom-rl) interface \
-✅ Many environments including humanoids and quadrupeds \
-✅ Diverse set of datasets --> e.g., noisy motion capture or ground truth datasets with actions \
-✅ Wide spectrum of difficulty levels \
-✅ Built-in domain randomization \
-✅ Many baseline algorithms for quick benchmarking \
-✅ [Documentation](https://loco-mujoco.readthedocs.io/)
+Основным алгоритмом был `GAIL`(на основе `TRPO`), который позволяет обучаться поведению на основе демонстраций. Этот алгоримт был реализован в `imitation-lib` и для реализации использовался `mushroom-RL`.
 
----
+## Результаты экспериментов
 
-## Installation
+После подбора гиперпараметров я получил множества агентов, из которых выбрал по одному лучшему из обеих задач.
 
-You have the choice to install the latest release via PyPI by running 
+### Результаты задачи 1
 
-```bash
-pip install loco-mujoco 
-```
+Итоговое поведение:
 
-or you do an editable installation by cloning this repository and then running:
+<video width="640" height="480" controls>
+  <source src="/home/dmitriy/study/DISS/loco_mujoco_examples/loco-mujoco-examples/docs/videos/simple_learned.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
 
-```bash
-cd loco-mujoco
-pip install -e . 
-```
+Поведение эксперта:
 
-> [!NOTE]
-> We fixed the version of MuJoCo to 2.3.7 during installation since we found that there are slight 
-> differences in the simulation, which made testing very difficult. However, in practice, you can 
-> use any newer version of MuJoCo! Just install it after installing LocoMuJoCo.
+<video width="640" height="480" controls>
+  <source src="/home/dmitriy/study/DISS/loco_mujoco_examples/loco-mujoco-examples/docs/videos/simple_expert.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
 
-> [!NOTE]
-> If you want to run the **MyoSkeleton** environment, you need to additionally run
-> `loco-mujoco-myomodel-init` to accept the license and download the model. Finally, you need to 
-> upgrade Mujoco to 3.2.2 and dm_control to 1.0.22 *after* installing this package and downloading the datasets! 
+### Результаты задачи 2
 
+Итоговое поведение:
 
-### Download the Datasets
-After installing LocoMuJoCo, new commands for downloading the datasets will be setup for you.
-You have the choice of downloading all datasets available or only the ones you need.
+<video width="640" height="480" controls>
+  <source src="/home/dmitriy/study/DISS/loco_mujoco_examples/loco-mujoco-examples/docs/videos/hard_learned.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
 
-For example, to install all datasets run:  
-```bash
-loco-mujoco-download
-```
+Поведение эксперта:
 
-To install only the real (motion capture, no actions) datasets run:  
-```bash
-loco-mujoco-download-real
-```
+<video width="640" height="480" controls>
+  <source src="/home/dmitriy/study/DISS/loco_mujoco_examples/loco-mujoco-examples/docs/videos/hard_expert.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
 
-To install only the perfect (ground-truth with actions) datasets run:  
-```bash
-loco-mujoco-download-perfect
-```
+## Проблемы, с которыми я столкнулся
 
-### Installing the Baselines
-If you also want to run the baselines, you have to install our imitation learning library [imitation_lib](https://github.com/robfiras/ls-iq). You find example files for training the baselines for any LocoMuJoCo task [here](examples/imitation_learning).
+Во время экспериментов возникло несколько серьезных трудностей, связанных с используемыми библиотеками:
 
-### First Test
-To verify that everything is installed correctly, run the examples such as:
+1. **Проблемы с mushroom-RL**:
+   - Библиотека не поддерживает параллелизацию сред, что существенно увеличивает время обучения. Для задачи, требующей быстрой и эффективной симуляции, это оказалось критическим недостатком.
 
-```bash
-python examples/simple_mushroom_env/example_unitree_a1.py
-```
+2. **Проблемы с imitation-lib**:
+   - Неправильные значения аргументов по умолчанию в некоторых функциях библиотеки, что привело к невозможности корректного обучения на GPU без правки исходного кода.
 
-To replay a dataset run:
+## Итог и впечатления
 
-```bash
-python examples/replay_datasets/replay_Unitree.py
-```
----
-## Environments & Tasks
-You want a quick overview of all **environments**, **tasks** and **datasets** available? You can find it 
-[here](/loco_mujoco/environments) and more detailed in the [Documentation](https://loco-mujoco.readthedocs.io/).
+По результатам экспериментов могу отметить, что мне не очень понравилась работа с loco-mujoco, так как его можно использовать только для простых задач, таких как обучение базовой ходьбе квадропедов и гуманоидов. Однако при решении более сложных задач, таких как паркур или выполнение сложных маневров, данный инструмент не подходит и требует более сложных симуляций.
 
-<p align="center">
-  <img src="https://github.com/robfiras/loco-mujoco/assets/69359729/73ca0cdd-3958-4d59-a1f7-0eba00fe373a">
-</p>
-
-And stay tuned! There are many more to come ...
-
----
-## Quick Examples
-LocoMuJoCo is very easy to use. Just choose and create the environment, and generate the dataset belonging to this task and you are ready to go! 
-```python
-import numpy as np
-import loco_mujoco
-import gymnasium as gym
-
-
-env = gym.make("LocoMujoco", env_name="HumanoidTorque.run")
-dataset = env.create_dataset()
-```
-You want to use LocoMuJoCo for pure reinforcement learning? No problem! Just define your custom reward function and pass it to the environment!
-
-```python
-import numpy as np
-import loco_mujoco
-import gymnasium as gym
-import numpy as np
-
-
-def my_reward_function(state, action, next_state):
-    return -np.mean(action)
-
-
-env = gym.make("LocoMujoco", env_name="HumanoidTorque.run", reward_type="custom",
-               reward_params=dict(reward_callback=my_reward_function))
-
-```
-
-LocoMuJoCo *natively* supports [MushroomRL](https://github.com/MushroomRL/mushroom-rl):
-
-```python
-import numpy as np
-from loco_mujoco import LocoEnv
-
-env = LocoEnv.make("HumanoidTorque.run")
-dataset = env.create_dataset()
-```
-
-You can find many more examples [here](examples).
-
-Detailed Tutorials are given in the [Documentation](https://loco-mujoco.readthedocs.io/).
-
----
-## Citation
-```
-@inproceedings{alhafez2023b,
-title={LocoMuJoCo: A Comprehensive Imitation Learning Benchmark for Locomotion},
-author={Firas Al-Hafez and Guoping Zhao and Jan Peters and Davide Tateo},
-booktitle={6th Robot Learning Workshop, NeurIPS},
-year={2023}
-}
-```
-
----
-## Credits 
-Both Unitree models were taken from the [MuJoCo menagerie](https://github.com/google-deepmind/mujoco_menagerie)
-
-
-
+В целом, эти эксперименты позволили мне выявить узкие места в процессах обучения и сделать вывод о необходимости более глубоких исследований в области имитационного обучения для роботов. Сейчас я занимаюсь изучением MJX, для реализации обучения ходьбе, а далее более сложным маневрам для квадропеда
